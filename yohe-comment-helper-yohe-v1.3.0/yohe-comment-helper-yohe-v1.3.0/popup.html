@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Yohe 评论表单助手</title>
+  <style>
+    :root { color-scheme: light; }
+    * { box-sizing: border-box; }
+    body { width: 330px; margin: 0; padding: 16px; color: #202733; font: 13px/1.55 system-ui, "Microsoft YaHei", sans-serif; background: #f7f8fa; }
+    h1 { margin: 0 0 4px; font-size: 17px; }
+    .sub { margin: 0 0 14px; color: #667085; font-size: 12px; }
+    label { display: block; margin: 10px 0 5px; font-weight: 600; }
+    input[type="text"], input[type="email"] { width: 100%; border: 1px solid #d0d5dd; border-radius: 7px; padding: 8px 9px; font: inherit; background: #fff; }
+    textarea.lib-textarea { width:100%;min-height:72px;border:1px solid #d0d5dd;border-radius:7px;padding:6px 8px;font:11px system-ui;background:#fff;resize:vertical; }
+    .hint { margin-top: 4px; color: #667085; font-size: 11px; }
+    .check { display: flex; gap: 7px; align-items: flex-start; margin: 12px 0; color: #475467; font-size: 12px; }
+    .check input { margin: 3px 0 0; }
+    button { width: 100%; border: 0; border-radius: 8px; padding: 10px; font: inherit; font-weight: 650; cursor: pointer; }
+    .btn-row { display:flex;gap:6px;margin:4px 0 8px; }
+    .btn-row button { flex:1;padding:5px;font-size:11px;font-weight:normal; }
+    #save { color: #fff; background: #2563eb; }
+    #fill { margin-top: 8px; color: #1d2939; background: #e4e7ec; }
+    #clearRecord { margin-top:6px;color:#fff;background:#dc2626; }
+    .btn-rand { background:#dbeafe;color:#1d4ed8; }
+    .lib-wrap { margin-top:12px;padding-top:10px;border-top:1px solid #e4e7ec; }
+    .lib-toggle { font-size:12px;color:#2563eb;cursor:pointer;margin:4px 0; }
+    .lib-panel { display:none; }
+    .lib-panel.open { display:block; }
+    #status { min-height: 18px; margin-top: 10px; color: #475467; font-size: 12px; }
+    .note { margin-top: 10px; padding-top: 9px; border-top: 1px solid #e4e7ec; color: #667085; font-size: 11px; }
+  </style>
+</head>
+<body>
+  <h1>Yohe 评论表单助手</h1>
+  <p class="sub">仅适用于 yohe.one 游戏详情页</p>
+
+  <label for="commentText">评论内容</label>
+  <div class="btn-row">
+    <input id="commentText" type="text" maxlength="5" value="感谢分享" style="flex:4;">
+    <button class="btn-rand" id="randComment">随机</button>
+  </div>
+  <div class="hint">必须为 3–5 个汉字；默认“感谢分享”。</div>
+
+  <label for="authorName">昵称（可留空）</label>
+  <div class="btn-row">
+    <input id="authorName" type="text" maxlength="40" placeholder="留空则保留网页已有昵称" style="flex:4;">
+    <button class="btn-rand" id="randName">随机</button>
+  </div>
+
+  <label for="authorEmail">邮箱（可留空）</label>
+  <div class="btn-row">
+    <input id="authorEmail" type="email" maxlength="120" placeholder="留空则保留网页已有邮箱" style="flex:4;">
+    <button class="btn-rand" id="randMail">随机</button>
+  </div>
+
+  <label class="check"><input id="overwriteProfile" type="checkbox"><span>使用上面保存的昵称/邮箱覆盖网页已有值</span></label>
+  <label class="check"><input id="autoSubmitAndReload" type="checkbox"><span>填写完成后自动点击发布(小飞机)并刷新页面【谨慎开启，会直接提交评论】</span></label>
+  <label class="check"><input id="autoRandomLib" type="checkbox"><span>执行填写表单时自动从库随机抽取评论/昵称/邮箱</span></label>
+  <label class="check"><input id="genRandNickMail" type="checkbox"><span>程序随机生成昵称&邮箱（忽略昵称/邮箱文本库）</span></label>
+
+  <button id="save">保存设置</button>
+  <button id="fill">立即填写当前页面</button>
+  <button id="clearRecord">清除已提交网址记录</button>
+
+  <div class="lib-wrap">
+    <div class="lib-toggle" id="toggleLibPanel">▶ 展开编辑话术、昵称、邮箱库</div>
+    <div class="lib-panel" id="libPanel">
+      <label>评论话术库（一行1条，每条3‑5汉字）</label>
+      <textarea class="lib-textarea" id="libComment" placeholder="感谢分享&#10;佳作推荐&#10;值得一试"></textarea>
+      <label>昵称库（一行1条，程序生成开启后此项无效）</label>
+      <textarea class="lib-textarea" id="libNick"></textarea>
+      <label>邮箱库（一行1条完整邮箱，程序生成开启后此项无效）</label>
+      <textarea class="lib-textarea" id="libEmail"></textarea>
+      <div class="hint">保存设置时会同时保存上面三个库，空行会自动忽略</div>
+    </div>
+  </div>
+
+  <div id="status" role="status" aria-live="polite"></div>
+  <div class="note">扩展会自动计算页面本次生成的加法题。勾选自动提交后，同一个网址只会自动提交一次；手动填写不受限制。设置仅保存在本机浏览器。</div>
+  <script src="popup.js"></script>
+</body>
+</html>

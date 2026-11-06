@@ -1,0 +1,23 @@
+{
+  "manifest_version": 3,
+  "name": "Yohe 评论表单助手",
+  "version": "1.3.0",
+  "description": "仅在 https://yohe.one/game/* 游戏详情页自动填写评论表单和计算加法验证；用户手动提交后可自动刷新一次。",
+  "permissions": ["storage", "activeTab"],
+  "host_permissions": [
+    "https://yohe.one/game/*"
+  ],
+  "action": {
+    "default_title": "Yohe 评论表单助手",
+    "default_popup": "popup.html"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://yohe.one/game/*"
+      ],
+      "js": ["content.js"],
+      "run_at": "document_idle"
+    }
+  ]
+}
